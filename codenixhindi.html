@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<link rel="icon" type="image/png" sizes="192x192" href="logo-192.png">
-<link rel="apple-touch-icon" href="logo-192.png">
-<link rel="manifest" href="manifest.json">
-
-
-
-
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codenix Hindi Learning App</title>
@@ -17,49 +8,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CSS Variables (Dark Theme) --- */
+        /* --- CSS Variables (Dark Theme Default) --- */
         :root {
-            --bg-body: #050b14;
-            --bg-glass: rgba(15, 23, 42, 0.6);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --primary-blue: #2563eb;
-            --primary-hover: #1d4ed8;
+            --bg-body: #0b1120; 
+            --bg-glass: #151e32;
+            --border-glass: rgba(255, 255, 255, 0.05);
+            --primary-blue: #3b82f6;
+            --primary-hover: #2563eb;
             --accent-yellow: #facc15;
             --text-main: #ffffff;
             --text-muted: #94a3b8;
             --success: #10b981;
             --danger: #ef4444;
-            --card-hover: rgba(37, 99, 235, 0.1);
+            --card-hover: rgba(59, 130, 246, 0.1);
         }
+
+        /* --- Light Theme Variables --- */
+        body.light-theme {
+            --bg-body: #f8fafc;
+            --bg-glass: #ffffff;
+            --border-glass: rgba(0, 0, 0, 0.1);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --card-hover: rgba(37, 99, 235, 0.05);
+        }
+        body.light-theme .search-container input { color: var(--text-main); }
+        body.light-theme .hero { background: linear-gradient(135deg, rgba(37,99,235,0.1) 0%, rgba(255,255,255,0.9) 100%); }
+        body.light-theme .course-card .thumbnail { color: #fff !important; }
 
         /* --- Reset & Global --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg-body); color: var(--text-main); overflow-x: hidden; display: flex; }
+        body { background-color: var(--bg-body); color: var(--text-main); overflow-x: hidden; display: flex; transition: background-color 0.3s ease, color 0.3s ease; }
         
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-blue); }
 
-        /* --- Sidebar --- */
+        /* --- Sidebar (Left) --- */
         .sidebar {
-            width: 260px; height: 100vh; background: var(--bg-glass);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            width: 260px; height: 100vh; background: var(--bg-body);
             border-right: 1px solid var(--border-glass);
             position: fixed; top: 0; left: 0; display: flex; flex-direction: column;
             z-index: 1000; transition: 0.3s ease;
         }
-        .logo-area { padding: 20px; font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border-glass); }
-        .logo-area i { color: var(--primary-blue); font-size: 26px; }
-        .logo-area span { color: var(--accent-yellow); font-size: 12px; vertical-align: top; }
+        .logo-area { padding: 20px; font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border-glass); }
+        .logo-area i { color: var(--primary-blue); font-size: 24px; }
+        .logo-area span { color: var(--accent-yellow); font-size: 10px; vertical-align: top; background: rgba(250, 204, 21, 0.2); padding: 2px 6px; border-radius: 4px;}
+        
         .nav-menu { padding: 15px 10px; overflow-y: auto; flex: 1; }
         .nav-item { padding: 12px 15px; display: flex; align-items: center; gap: 15px; color: var(--text-muted); border-radius: 10px; cursor: pointer; transition: all 0.3s ease; margin-bottom: 5px; font-size: 14px; font-weight: 500;}
         .nav-item:hover, .nav-item.active { background: var(--primary-blue); color: #fff; transform: translateX(5px); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); }
         .nav-item i { font-size: 18px; width: 20px; text-align: center; }
 
         /* --- Main Content --- */
-        .main-wrapper { margin-left: 260px; width: calc(100% - 260px); padding: 20px 30px; min-height: 100vh; transition: 0.3s ease; }
+        .main-wrapper { margin-left: 260px; width: calc(100% - 260px); padding: 20px 40px 80px; min-height: 100vh; transition: 0.3s ease; }
         
         /* --- Topbar --- */
         .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
@@ -69,155 +72,196 @@
             background: var(--bg-glass); border: 1px solid var(--border-glass);
             padding: 10px 20px; border-radius: 30px; display: flex; align-items: center; gap: 10px; width: 400px;
         }
-        .search-container input { background: transparent; border: none; outline: none; color: white; width: 100%; font-size: 14px; }
+        .search-container input { background: transparent; border: none; outline: none; color: var(--text-main); width: 100%; font-size: 14px; }
         .search-container i { color: var(--text-muted); }
 
         .top-actions { display: flex; align-items: center; gap: 20px; }
         .icon-btn { position: relative; cursor: pointer; color: var(--text-muted); font-size: 20px; transition: 0.3s; }
         .icon-btn:hover { color: var(--text-main); }
-        .badge { position: absolute; top: -5px; right: -5px; background: var(--danger); color: white; font-size: 10px; padding: 2px 5px; border-radius: 50%; font-weight: bold; }
+        .badge { position: absolute; top: -5px; right: -5px; background: var(--danger); color: white; font-size: 10px; padding: 2px 5px; border-radius: 50%; font-weight: bold; border: 2px solid var(--bg-body);}
         
-        .user-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .user-profile img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--primary-blue); object-fit: cover; }
-        .user-info h4 { font-size: 14px; font-weight: 600; }
-        .user-info p { font-size: 12px; color: var(--text-muted); }
+        .user-profile { display: flex; align-items: center; gap: 12px; }
+        .user-profile img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary-blue); object-fit: cover; }
+        .user-info h4 { font-size: 13px; font-weight: 600; }
+        .user-info p { font-size: 11px; color: var(--text-muted); }
+
+        .right-menu-btn { font-size: 22px; color: var(--text-main); cursor: pointer; padding: 5px; transition: 0.3s; }
+        .right-menu-btn:hover { color: var(--primary-blue); }
 
         /* --- Hero Section --- */
         .hero {
-            background: linear-gradient(135deg, rgba(37,99,235,0.2) 0%, rgba(15,23,42,0.8) 100%), url('https://www.transparenttextures.com/patterns/cubes.png');
+            background: linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(11,17,32,0.9) 100%), url('https://www.transparenttextures.com/patterns/cubes.png');
             border: 1px solid var(--border-glass); border-radius: 20px; padding: 40px;
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;
-            position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative; overflow: hidden; 
         }
-        .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 60%); z-index: 0; }
         .hero-content { z-index: 1; max-width: 600px; }
-        .hero-content h1 { font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 15px; }
+        .hero-content h1 { font-size: 32px; font-weight: 700; line-height: 1.3; margin-bottom: 15px; }
         .hero-content h1 span { color: var(--accent-yellow); }
-        .hero-content p { color: var(--text-muted); font-size: 16px; margin-bottom: 25px; }
+        .hero-content p { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; line-height: 1.6; }
         .hero-btns { display: flex; gap: 15px; }
-        .btn { padding: 12px 25px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 14px; }
-        .btn-primary { background: var(--primary-blue); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
+        .btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 13px; }
+        .btn-primary { background: var(--primary-blue); color: white; }
         .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
-        .btn-outline { background: transparent; color: white; border: 1px solid var(--text-muted); backdrop-filter: blur(5px); }
-        .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); transform: translateY(-2px); }
-        .hero-image { z-index: 1; font-size: 120px; color: rgba(255,255,255,0.1); animation: float 6s ease-in-out infinite; }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+        .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--border-glass); }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); transform: translateY(-2px); }
+        .hero-image { z-index: 1; font-size: 100px; color: rgba(255,255,255,0.05); }
 
         /* --- Dashboard Grid System --- */
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .section-title { font-size: 18px; font-weight: 600; }
-        .view-all { color: var(--primary-blue); font-size: 13px; text-decoration: none; font-weight: 500; transition: 0.3s; }
+        .section-title { font-size: 16px; font-weight: 600; }
+        .view-all { color: var(--primary-blue); font-size: 12px; text-decoration: none; font-weight: 500; cursor: pointer; transition: 0.3s; }
         .view-all:hover { color: var(--accent-yellow); }
 
-        .grid-row-1 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .grid-row-2 { display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; margin-bottom: 30px; }
-        .grid-row-3 { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 30px; }
+        .grid-row-1 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .grid-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
 
-        /* Glass Cards Base */
-        .glass-card { background: var(--bg-glass); backdrop-filter: blur(10px); border: 1px solid var(--border-glass); border-radius: 15px; padding: 20px; transition: 0.3s; }
-        .glass-card:hover { transform: translateY(-5px); border-color: rgba(37,99,235,0.3); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .glass-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 15px; padding: 20px; transition: 0.3s; }
+        .glass-card:hover { border-color: rgba(37,99,235,0.3); }
 
         /* --- Course Cards --- */
-        .course-card .thumbnail { height: 120px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; margin-bottom: 15px; color: white; box-shadow: inset 0 0 20px rgba(0,0,0,0.2); }
-        .course-card h3 { font-size: 16px; margin-bottom: 5px; }
-        .course-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 15px; }
-        .badge-free { background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 2px 8px; border-radius: 5px; font-weight: 600; }
-        .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; margin-bottom: 5px; }
+        .course-card .thumbnail { height: 110px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 35px; font-weight: bold; margin-bottom: 15px; color: white; }
+        .course-card h3 { font-size: 15px; margin-bottom: 5px; }
+        .course-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-bottom: 15px; align-items: center;}
+        .badge-free { background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 3px 8px; border-radius: 4px; font-weight: 600; font-size: 10px;}
+        .progress-container { width: 100%; height: 4px; background: var(--bg-body); border-radius: 5px; overflow: hidden; margin-bottom: 8px; }
         .progress-bar { height: 100%; border-radius: 5px; }
-        .progress-text { font-size: 11px; color: var(--text-muted); text-align: right; }
+        .progress-text { font-size: 10px; color: var(--text-muted); text-align: right; }
 
-        /* --- Notes Section --- */
-        .note-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--border-glass); transition: 0.3s; }
-        .note-item:hover { background: var(--card-hover); border-radius: 8px; border-bottom-color: transparent; }
-        .note-item:last-child { border-bottom: none; }
+        /* --- Notes & Videos Section --- */
+        .item-list-container { max-height: 300px; overflow-y: auto; padding-right: 5px; }
+        .note-item, .video-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.02); margin-bottom: 10px; transition: 0.3s; border: 1px solid transparent; cursor: pointer;}
+        .note-item:hover, .video-item:hover { background: var(--card-hover); border-color: var(--border-glass); }
         .note-info { display: flex; align-items: center; gap: 15px; }
-        .pdf-icon { color: #ef4444; font-size: 24px; background: rgba(239, 68, 68, 0.1); padding: 10px; border-radius: 8px; }
-        .note-info h4 { font-size: 14px; font-weight: 500; }
-        .note-info p { font-size: 12px; color: var(--text-muted); }
-        .download-btn { color: var(--primary-blue); cursor: pointer; transition: 0.3s; text-decoration: none;}
-        .download-btn:hover { color: var(--text-main); }
+        .vid-thumb { width: 60px; height: 40px; border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 16px; color: white; background: #1e293b; }
+        .info-text h4 { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+        .info-text p { font-size: 11px; color: var(--text-muted); }
 
-        /* --- Videos Section --- */
-        .video-item { display: flex; align-items: center; gap: 15px; padding: 12px; border-radius: 10px; transition: 0.3s; border: 1px solid transparent;}
-        .video-item:hover { background: var(--card-hover); border-color: var(--border-glass); }
-        .vid-thumb { width: 120px; height: 70px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 24px; color: white; position: relative; }
-        .vid-duration { position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.8); font-size: 10px; padding: 2px 5px; border-radius: 4px; }
-        .vid-info { flex: 1; }
-        .vid-info h4 { font-size: 14px; font-weight: 500; margin-bottom: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .vid-info p { font-size: 12px; color: var(--text-muted); }
+        /* --- NEW: Promotional Image Slider Board --- */
+        .promo-slider {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .promo-slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+        }
+        .promo-slide.active-slide {
+            opacity: 1;
+        }
 
-        /* --- Quiz & Categories --- */
-        .quiz-box { background: linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(15,23,42,0.6) 100%); border-color: rgba(139,92,246,0.3); }
-        .quiz-flex { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .quiz-icon { font-size: 30px; color: #8b5cf6; background: rgba(139,92,246,0.1); padding: 15px; border-radius: 12px; }
-        .quiz-stats { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 13px; color: var(--text-muted); }
-        .quiz-stats span { color: white; font-weight: bold; }
+        /* --- Skeleton Loader --- */
+        .skeleton { background: linear-gradient(90deg, var(--bg-glass) 25%, rgba(255,255,255,0.05) 50%, var(--bg-glass) 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 8px; height: 50px; margin-bottom: 10px; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* --- RIGHT DRAWER --- */
+        .right-drawer {
+            position: fixed; top: 0; right: -320px; width: 320px; height: 100vh;
+            background: var(--bg-body); border-left: 1px solid var(--border-glass);
+            z-index: 4000; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
+        .right-drawer.active { right: 0; }
+        .drawer-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-glass); }
+        .drawer-header h3 { font-size: 16px; font-weight: 600; }
+        .drawer-close { font-size: 20px; color: var(--text-muted); cursor: pointer; transition: 0.3s; }
+        .drawer-close:hover { color: var(--danger); transform: rotate(90deg); }
+        .drawer-content { padding: 20px; flex: 1; overflow-y: auto; }
+        .drawer-profile-box { text-align: center; margin-bottom: 25px; }
+        .drawer-profile-box img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary-blue); margin-bottom: 10px; }
         
-        .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .cat-item { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .cat-item:hover { background: var(--card-hover); transform: scale(1.05); }
-        .cat-item i { font-size: 28px; margin-bottom: 10px; }
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); z-index: 3500;
+            opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
 
-        /* --- Progress Section --- */
-        .progress-dashboard { display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 20px; }
-        .circular-progress { width: 100px; height: 100px; border-radius: 50%; background: conic-gradient(var(--success) 65%, rgba(255,255,255,0.1) 0); display: flex; justify-content: center; align-items: center; position: relative; }
-        .circular-progress::before { content: ''; position: absolute; width: 80px; height: 80px; background: var(--bg-body); border-radius: 50%; }
-        .progress-value { position: relative; font-size: 20px; font-weight: bold; }
-        .stat-box { text-align: center; padding: 10px 20px; border-left: 1px solid var(--border-glass); }
-        .stat-box h2 { font-size: 24px; color: white; margin-top: 5px; }
-        .stat-box p { font-size: 12px; color: var(--text-muted); }
+        /* --- Permanent Bottom Navigation (Mobile Only) --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--bg-body); border-top: 1px solid var(--border-glass);
+            display: none; justify-content: space-around; align-items: center;
+            padding: 12px 0; z-index: 2000;
+        }
+        .bottom-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; cursor: pointer; transition: 0.3s; }
+        .bottom-btn i { font-size: 18px; }
+        .bottom-btn.active { color: var(--primary-blue); }
 
-        /* --- AI Bot Widget --- */
-        .ai-widget { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: white; cursor: pointer; box-shadow: 0 10px 25px rgba(139,92,246,0.5); z-index: 1000; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        /* --- Modals (Video & AI) --- */
+        .video-modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 5000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .video-modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        .video-modal-content { width: 100%; max-width: 800px; background: var(--bg-body); border-radius: 15px; overflow: hidden; border: 1px solid var(--border-glass); position: relative; }
+        .video-modal-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #0f172a; border-bottom: 1px solid var(--border-glass); }
+        .close-modal { color: var(--danger); font-size: 24px; cursor: pointer; }
+        .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; }
+        .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        /* --- Responsive Magic (Mobile View) --- */
+        /* --- SPA Section Hiding --- */
+        .spa-page { display: none; animation: fadeIn 0.4s ease; }
+        .spa-page.active-page { display: block; }
+
+        /* --- Responsive Magic --- */
         @media (max-width: 1024px) {
-            .grid-row-2, .grid-row-3 { grid-template-columns: 1fr; }
+            .grid-row-2 { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
-            .sidebar { left: -260px; } /* Hide Sidebar */
+            .sidebar { left: -260px; }
             .sidebar.active { left: 0; box-shadow: 100px 0 0 rgba(0,0,0,0.5); }
-            .main-wrapper { margin-left: 0; width: 100%; padding: 15px; }
+            .main-wrapper { margin-left: 0; width: 100%; padding: 15px 15px 80px 15px; }
             .menu-toggle { display: block; }
-            .search-container { display: none; }
+            .search-container, .user-info { display: none; }
             .hero { flex-direction: column; text-align: center; padding: 25px; }
             .hero-btns { justify-content: center; }
             .hero-image { display: none; }
-            .stat-box { border-left: none; border-bottom: 1px solid var(--border-glass); padding-bottom: 15px; width: 100%; }
-            .stat-box:last-child { border-bottom: none; }
+            .bottom-nav { display: flex; } 
         }
-
-        /* Loading Spinner */
-        .loader { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; }
+        .loader { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: var(--primary-blue); animation: spin 1s ease-in-out infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
+    <!-- Left Main Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="logo-area">
             <i class="fas fa-laptop-code"></i> CODENIX <span>HINDI</span>
         </div>
-        <div class="nav-menu">
-            <div class="nav-item active"><i class="fas fa-home"></i> Home</div>
-            <div class="nav-item"><i class="fas fa-book-open"></i> Courses</div>
-            <div class="nav-item"><i class="fas fa-play-circle"></i> Videos</div>
-            <div class="nav-item"><i class="fas fa-file-pdf"></i> Notes</div>
-            <div class="nav-item"><i class="fas fa-question-circle"></i> Quiz</div>
-            <div class="nav-item"><i class="fas fa-bookmark"></i> Bookmarks</div>
-            <div class="nav-item"><i class="fas fa-robot"></i> Doubt Solver <span class="badge" style="position:relative; right:0; top:0;">AI</span></div>
-            <div class="nav-item"><i class="fas fa-chart-line"></i> Progress</div>
-            <div class="nav-item"><i class="fas fa-layer-group"></i> Categories</div>
-            <div class="nav-item"><i class="fas fa-bell"></i> Notifications</div>
-            <div class="nav-item" style="margin-top: 20px;"><i class="fas fa-user-circle"></i> Profile</div>
-            
-            <div class="nav-item" onclick="logout()" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Logout</div>
+        <div class="nav-menu" style="flex: 1; overflow-y: auto;">
+            <div class="nav-item active" onclick="switchPage('homePage', this)"><i class="fas fa-home"></i> Home</div>
+            <div class="nav-item" onclick="switchPage('coursesPage', this)"><i class="fas fa-book-open"></i> Courses</div>
+            <div class="nav-item" onclick="switchPage('videosPage', this)"><i class="fas fa-play-circle"></i> Videos</div>
+            <div class="nav-item" onclick="switchPage('notesPage', this)"><i class="fas fa-file-pdf"></i> Notes</div>
+            <div class="nav-item" onclick="switchPage('downloadsPage', this)"><i class="fas fa-download"></i> Downloads</div>
+            <div class="nav-item" onclick="switchPage('categoriesPage', this)"><i class="fas fa-layer-group"></i> Categories</div>
+            <div class="nav-item" onclick="openAIModal()"><i class="fas fa-robot"></i> Doubt Solver <span class="badge" style="position:relative; right:0; top:0; background: #8b5cf6;">AI</span></div>
+        </div>
+        
+        <!-- Fixed Profile & Logout -->
+        <div style="padding: 15px; border-top: 1px solid var(--border-glass);">
+            <div class="nav-item" style="margin-bottom: 0;"><i class="fas fa-user-circle"></i> Profile</div>
+            <div class="nav-item" onclick="logout()" style="color: var(--danger); margin-bottom: 0; margin-top: 5px;"><i class="fas fa-sign-out-alt"></i> Logout</div>
         </div>
     </aside>
 
     <main class="main-wrapper">
         
+        <!-- Topbar -->
         <header class="topbar">
             <i class="fas fa-bars menu-toggle" id="menu-btn"></i>
             
@@ -227,289 +271,547 @@
             </div>
 
             <div class="top-actions">
-                <i class="fas fa-moon icon-btn" id="theme-btn"></i>
+                <span id="greetingText" style="font-size: 13px; font-weight: 500; color: var(--text-muted); display: none;">Good Morning!</span>
+                <i class="fas fa-moon icon-btn" id="theme-btn" title="Toggle Theme"></i>
                 <div class="icon-btn">
                     <i class="fas fa-bell"></i>
                     <span class="badge">3</span>
                 </div>
                 <div class="user-profile">
-                    <img id="userAvatar" src="https://ui-avatars.com/api/?name=User&background=2563eb&color=fff" alt="User">
+                    <img id="userAvatar" src="https://ui-avatars.com/api/?name=Guest+User&background=2563eb&color=fff" alt="User">
                     <div class="user-info">
-                        <h4 id="displayUserName">Loading...</h4>
+                        <h4 id="displayUserName">Guest User</h4>
                         <p id="displayUserRole">Student</p>
                     </div>
-                    <i class="fas fa-chevron-down" style="font-size: 12px; color: var(--text-muted);"></i>
                 </div>
+                <i class="fas fa-bars right-menu-btn" onclick="toggleRightMenu()" title="Menu"></i>
             </div>
         </header>
 
-        <section class="hero" id="homeBanner">
-            <div class="hero-content">
-                <h1>Welcome to <br>Codenix Hindi <br><span>Learning App</span></h1>
-                <p>हिंदी में सीखें Computer और Programming बिल्कुल आसान तरीके से! Access high-quality videos, PDF notes, and interactive quizzes.</p>
-                <div class="hero-btns">
-                    <button class="btn btn-primary"><i class="fas fa-compass"></i> Explore Courses</button>
-                    <button class="btn btn-outline"><i class="fas fa-stopwatch"></i> Take Quiz</button>
-                </div>
-            </div>
-            <div class="hero-image">
-                <i class="fas fa-user-graduate"></i>
-            </div>
-        </section>
+        <!-- ============================================== -->
+        <!-- SPA SECTIONS                                   -->
+        <!-- ============================================== -->
 
-        <div class="section-header">
-            <h2 class="section-title">Popular Courses</h2>
-            <a href="#" class="view-all">View All</a>
-        </div>
-        <div class="grid-row-1">
-            <div class="glass-card course-card">
-                <div class="thumbnail" style="background: linear-gradient(135deg, #f97316, #ea580c);">&lt;/&gt;</div>
-                <h3>HTML Full Course</h3>
-                <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
-                <div class="progress-container"><div class="progress-bar" style="width: 60%; background: #f97316;"></div></div>
-                <div class="progress-text">60% Complete</div>
-            </div>
-            <div class="glass-card course-card">
-                <div class="thumbnail" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">CSS</div>
-                <h3>CSS Full Course</h3>
-                <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
-                <div class="progress-container"><div class="progress-bar" style="width: 45%; background: #3b82f6;"></div></div>
-                <div class="progress-text">45% Complete</div>
-            </div>
-            <div class="glass-card course-card">
-                <div class="thumbnail" style="background: linear-gradient(135deg, #eab308, #ca8a04); color: #000;">JS</div>
-                <h3>JavaScript Full Course</h3>
-                <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
-                <div class="progress-container"><div class="progress-bar" style="width: 30%; background: #eab308;"></div></div>
-                <div class="progress-text">30% Complete</div>
-            </div>
-            <div class="glass-card course-card">
-                <div class="thumbnail" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);"><i class="fas fa-desktop"></i></div>
-                <h3>Computer Basics</h3>
-                <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
-                <div class="progress-container"><div class="progress-bar" style="width: 80%; background: #8b5cf6;"></div></div>
-                <div class="progress-text">80% Complete</div>
-            </div>
-        </div>
-
-        <div class="grid-row-2">
-            <div class="glass-card" id="notesSection">
-                <div class="section-header">
-                    <h2 class="section-title">Latest Notes</h2>
-                    <a href="#" class="view-all">View All</a>
-                </div>
-                <div style="text-align:center; padding: 20px;"><div class="loader"></div> Loading Notes...</div>
-            </div>
-
-            <div class="glass-card" id="videosSection">
-                <div class="section-header">
-                    <h2 class="section-title">Recent Videos</h2>
-                    <a href="#" class="view-all">View All</a>
-                </div>
-                <div style="text-align:center; padding: 20px;"><div class="loader"></div> Loading Videos...</div>
-            </div>
-        </div>
-
-        <div class="grid-row-3">
-            <div class="glass-card quiz-box">
-                <div class="section-header">
-                    <h2 class="section-title">Quiz Section</h2>
-                </div>
-                <div class="quiz-flex">
-                    <i class="fas fa-crosshairs quiz-icon"></i>
-                    <div>
-                        <h4 style="font-size: 15px; margin-bottom: 5px;">Test Your Knowledge</h4>
-                        <p style="font-size: 12px; color: var(--text-muted);">Chapter-wise Quiz <br>और अपना स्कोर बढ़ाएं!</p>
+        <!-- 1. HOME PAGE -->
+        <div id="homePage" class="spa-page active-page">
+            <section class="hero" id="homeBanner">
+                <div class="hero-content">
+                    <h1>Welcome to <br>Codenix Hindi <br><span>Learning App</span></h1>
+                    <p>हिंदी में सीखें Computer और Programming बिल्कुल आसान तरीके से! Access high-quality videos, PDF notes, and interactive quizzes.</p>
+                    <div class="hero-btns">
+                        <button class="btn btn-primary" onclick="switchPage('coursesPage')"><i class="fas fa-compass"></i> Explore Courses</button>
+                        <button class="btn btn-outline"><i class="fas fa-stopwatch"></i> Take Quiz</button>
                     </div>
                 </div>
-                <div class="quiz-stats">
-                    <div>Total Quiz: <span>25</span></div>
-                    <div>Attempted: <span>12</span></div>
-                    <div>Best Score: <span>85%</span></div>
+                <div class="hero-image">
+                    <i class="fas fa-user-graduate"></i>
                 </div>
-                <button class="btn btn-primary" style="width: 100%; justify-content: center; background: #8b5cf6;">Start Quiz</button>
-            </div>
+            </section>
 
-            <div class="glass-card">
-                <div class="section-header">
-                    <h2 class="section-title">Categories</h2>
-                    <a href="#" class="view-all">View All</a>
-                </div>
-                <div class="cat-grid">
-                    <div class="cat-item">
-                        <i class="fas fa-globe" style="color: #10b981;"></i>
-                        <span style="font-size: 13px;">Web Dev</span>
-                    </div>
-                    <div class="cat-item">
-                        <i class="fas fa-code" style="color: #3b82f6;"></i>
-                        <span style="font-size: 13px;">Programming</span>
-                    </div>
-                    <div class="cat-item">
-                        <i class="fas fa-desktop" style="color: #f59e0b;"></i>
-                        <span style="font-size: 13px;">Computer Basics</span>
-                    </div>
-                    <div class="cat-item">
-                        <i class="fas fa-th-large" style="color: #8b5cf6;"></i>
-                        <span style="font-size: 13px;">More Courses</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="glass-card" style="margin-bottom: 30px;">
+            <!-- Popular Courses Preview -->
             <div class="section-header">
-                <h2 class="section-title">Your Learning Progress</h2>
+                <h2 class="section-title">Popular Courses</h2>
+                <span class="view-all" onclick="switchPage('coursesPage')">View All</span>
             </div>
-            <div class="progress-dashboard">
-                <div style="display: flex; align-items: center; gap: 20px;">
-                    <div class="circular-progress">
-                        <span class="progress-value">65%</span>
+            <div class="grid-row-1">
+                <div class="glass-card course-card">
+                    <div class="thumbnail" style="background: #ea580c;">&lt;/&gt;</div>
+                    <h3>HTML Full Course</h3>
+                    <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
+                    <div class="progress-container"><div class="progress-bar" style="width: 60%; background: #f97316;"></div></div>
+                    <div class="progress-text">60% Complete</div>
+                </div>
+                <div class="glass-card course-card">
+                    <div class="thumbnail" style="background: #2563eb;">CSS</div>
+                    <h3>CSS Full Course</h3>
+                    <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
+                    <div class="progress-container"><div class="progress-bar" style="width: 45%; background: #3b82f6;"></div></div>
+                    <div class="progress-text">45% Complete</div>
+                </div>
+                <div class="glass-card course-card">
+                    <div class="thumbnail" style="background: #ca8a04; color: #000;">JS</div>
+                    <h3>JavaScript Full Course</h3>
+                    <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
+                    <div class="progress-container"><div class="progress-bar" style="width: 30%; background: #eab308;"></div></div>
+                    <div class="progress-text">30% Complete</div>
+                </div>
+            </div>
+
+            <!-- Notes & Videos Grid -->
+            <div class="grid-row-2">
+                <div class="glass-card">
+                    <div class="section-header">
+                        <h2 class="section-title">Latest Notes</h2>
+                        <span class="view-all" onclick="switchPage('notesPage')">View All</span>
                     </div>
-                    <div>
-                        <h3 style="margin-bottom: 5px;">Overall Progress</h3>
-                        <p style="color: var(--text-muted); font-size: 13px;">Keep it up!</p>
+                    <div class="item-list-container" id="homeNotesSection">
+                        <div class="skeleton"></div><div class="skeleton"></div>
                     </div>
                 </div>
-                <div class="stat-box">
-                    <p>Courses Enrolled</p>
-                    <h2>8</h2>
+
+                <div class="glass-card">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Videos</h2>
+                        <span class="view-all" onclick="switchPage('videosPage')">View All</span>
+                    </div>
+                    <div class="item-list-container" id="homeVideosSection">
+                        <div class="skeleton"></div><div class="skeleton"></div>
+                    </div>
                 </div>
-                <div class="stat-box">
-                    <p>Chapters Completed</p>
-                    <h2>32 / 50</h2>
+            </div>
+
+            <!-- NEW: DYNAMIC PROMOTION BOARD (SLIDER CAROUSEL) -->
+            <div class="glass-card" style="margin-bottom: 30px;" id="promoSection">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-bullhorn" style="color: var(--accent-yellow);"></i> Special Announcements & Offers</h2>
                 </div>
-                <div class="stat-box">
-                    <p>Quizzes Attempted</p>
-                    <h2>12</h2>
-                </div>
-                <div class="stat-box" style="border-right: none;">
-                    <p>Certificates Earned</p>
-                    <h2 style="color: var(--accent-yellow);">2</h2>
+                <div class="promo-slider" id="promoSlider">
+                    <div style="display:flex; justify-content:center; align-items:center; height:100%; color:var(--text-muted); font-size: 13px;">
+                        <div class="loader"></div> &nbsp; Loading Promotions...
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div style="text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
-            <i class="fas fa-star" style="color: var(--accent-yellow);"></i> हमारा लक्ष्य: हिंदी में Computer Education को आसान बनाना!
+        <!-- 2. ALL COURSES PAGE -->
+        <div id="coursesPage" class="spa-page">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-book-open" style="color:var(--primary-blue);"></i> All Courses</h2>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Your courses structure fetched directly from database.</p>
+            <div class="grid-row-1" id="fullCoursesGrid">
+                <div class="glass-card course-card"><div class="thumbnail" style="background: #7c3aed;"><i class="fas fa-desktop"></i></div><h3>Computer Basics</h3><div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div></div>
+                <div class="glass-card course-card"><div class="thumbnail" style="background: #10b981;"><i class="fab fa-react"></i></div><h3>React JS (Coming Soon)</h3><div class="course-meta"><span>हिंदी में</span></div></div>
+            </div>
+        </div>
+
+        <!-- 3. ALL VIDEOS PAGE -->
+        <div id="videosPage" class="spa-page">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-play-circle" style="color:var(--primary-blue);"></i> All Videos</h2>
+            </div>
+            <div class="item-list-container" id="fullVideosList" style="max-height: none;">
+                <p style="color:var(--text-muted);">Loading Database...</p>
+            </div>
+        </div>
+
+        <!-- 4. ALL NOTES PAGE -->
+        <div id="notesPage" class="spa-page">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-file-pdf" style="color:var(--danger);"></i> All PDF Notes</h2>
+            </div>
+            <div class="item-list-container" id="fullNotesList" style="max-height: none;">
+                <p style="color:var(--text-muted);">Loading Database...</p>
+            </div>
+        </div>
+
+        <!-- 5. DOWNLOADS PAGE -->
+        <div id="downloadsPage" class="spa-page">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-download" style="color:var(--success);"></i> My Downloads</h2>
+            </div>
+            <div id="savedItemsList" style="display: grid; gap: 10px;"></div>
+        </div>
+
+        <!-- 6. CATEGORIES PAGE -->
+        <div id="categoriesPage" class="spa-page">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-layer-group" style="color:var(--accent-yellow);"></i> Categories</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                <div class="glass-card" style="text-align:center;"><i class="fas fa-globe" style="font-size:30px; color:#10b981; margin-bottom:10px;"></i><h4>Web Dev</h4></div>
+                <div class="glass-card" style="text-align:center;"><i class="fas fa-code" style="font-size:30px; color:#3b82f6; margin-bottom:10px;"></i><h4>Programming</h4></div>
+                <div class="glass-card" style="text-align:center;"><i class="fas fa-desktop" style="font-size:30px; color:#f59e0b; margin-bottom:10px;"></i><h4>Computer Basics</h4></div>
+            </div>
         </div>
 
     </main>
 
-    <div class="ai-widget" title="AI Doubt Solver">
-        <i class="fas fa-robot"></i>
+    <!-- Right Drawer Menu -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleRightMenu()"></div>
+    <div class="right-drawer" id="rightDrawer">
+        <div class="drawer-header">
+            <h3><i class="fas fa-sliders-h"></i> Settings & Menu</h3>
+            <i class="fas fa-times drawer-close" onclick="toggleRightMenu()"></i>
+        </div>
+        <div class="drawer-content">
+            <div class="drawer-profile-box">
+                <img id="drawerAvatarImg" src="https://ui-avatars.com/api/?name=Guest+User&background=2563eb&color=fff">
+                <h3 id="drawerUserName">Guest User</h3>
+                <p style="color:var(--text-muted); font-size:12px;" id="drawerUserRole">Student</p>
+            </div>
+            
+            <div class="nav-item" onclick="toggleFullScreen()"><i class="fas fa-expand"></i> Full Screen Mode</div>
+            <div class="nav-item" onclick="document.getElementById('theme-btn').click()"><i class="fas fa-adjust"></i> Change Theme</div>
+            <div class="nav-item" onclick="switchPage('downloadsPage'); toggleRightMenu()"><i class="fas fa-download"></i> Offline Downloads</div>
+            <div class="nav-item"><i class="fas fa-bookmark"></i> My Bookmarks</div>
+            
+            <div style="margin-top: 30px; border-top: 1px solid var(--border-glass); padding-top: 20px;">
+                <div class="nav-item" onclick="logout()" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Logout</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="bottom-btn active" data-target="homePage" onclick="switchPage('homePage')">
+            <i class="fas fa-home"></i><span>Home</span>
+        </div>
+        <div class="bottom-btn" data-target="coursesPage" onclick="switchPage('coursesPage')">
+            <i class="fas fa-book-open"></i><span>Course</span>
+        </div>
+        <div class="bottom-btn" data-target="downloadsPage" onclick="switchPage('downloadsPage')">
+            <i class="fas fa-download"></i><span>Downloads</span>
+        </div>
+        <div class="bottom-btn" onclick="toggleRightMenu()">
+            <i class="fas fa-bars"></i><span>Menu</span>
+        </div>
+    </div>
+
+    <!-- YouTube Video Modal -->
+    <div class="video-modal-overlay" id="videoModal">
+        <div class="video-modal-content">
+            <div class="video-modal-header">
+                <h3 id="modalVideoTitle" style="font-size: 15px; color: var(--accent-yellow);"><i class="fas fa-play-circle"></i> Video</h3>
+                <i class="fas fa-times close-modal" onclick="closeVideoModal()"></i>
+            </div>
+            <div class="iframe-container" id="iframeContainer"></div>
+        </div>
+    </div>
+
+    <!-- Gemini AI Doubt Solver Modal -->
+    <div class="video-modal-overlay" id="aiModal">
+        <div class="video-modal-content" style="max-width: 500px; height: 600px; display: flex; flex-direction: column;">
+            <div class="video-modal-header" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+                <h3 style="font-size: 16px; color: white;"><i class="fas fa-robot"></i> CodeNix AI Solver</h3>
+                <i class="fas fa-times close-modal" style="color: white;" onclick="closeAIModal()"></i>
+            </div>
+            <div id="aiChatBox" style="flex: 1; padding: 20px; overflow-y: auto; background: var(--bg-body); display: flex; flex-direction: column; gap: 15px;">
+                <div style="background: var(--bg-glass); padding: 12px; border-radius: 10px; border-bottom-left-radius: 0; max-width: 85%; color: var(--text-main); font-size: 13px;">
+                    नमस्ते! मैं CodeNix AI हूँ। वेब डेवलपमेंट (HTML, CSS, JS) या कंप्यूटर बेसिक्स से जुड़ा अपना कोई भी डाउट मुझसे पूछें!
+                </div>
+            </div>
+            <div style="padding: 15px; border-top: 1px solid var(--border-glass); display: flex; gap: 10px; background: #0f172a;">
+                <input type="text" id="aiInput" placeholder="अपना डाउट यहाँ टाइप करें..." style="flex: 1; padding: 10px 15px; border-radius: 20px; border: 1px solid var(--border-glass); background: var(--bg-body); color: white; outline: none; font-size: 13px;">
+                <button onclick="askGemini()" style="background: var(--primary-blue); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Google Sheet API URL
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydtK9KUc2ytUW42MPoMFvlU87zjVP0SF1C-8O-GWRKJvQ_dIP-aCE3ht4A8IrH56berQ/exec";
 
-        // 1. Sidebar Toggle Logic
-        const menuBtn = document.getElementById('menu-btn');
-        const sidebar = document.getElementById('sidebar');
-
-        menuBtn.addEventListener('click', () => { sidebar.classList.toggle('active'); });
-
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768 && !sidebar.contains(e.target) && e.target !== menuBtn) {
-                sidebar.classList.remove('active');
-            }
-        });
-
-        // 2. Set Logged In User Details
+        // ==========================================
+        // 1. INITIALIZATION & GREETING
+        // ==========================================
         window.onload = () => {
-            // Agar user logged in nahi hai, toh login page par bhej do
-            if(!localStorage.getItem("codenix_user_name")) {
-                window.location.href = "login.html";
-                return;
-            }
-
-            const userName = localStorage.getItem("codenix_user_name");
-            const userRole = localStorage.getItem("codenix_user_role");
+            const userName = localStorage.getItem("codenix_user_name") || "Guest User";
+            const userRole = localStorage.getItem("codenix_user_role") || "Student";
+            const avatarUrl = `https://ui-avatars.com/api/?name=${userName.replace(' ', '+')}&background=2563eb&color=fff`;
             
             document.getElementById('displayUserName').innerText = userName;
             document.getElementById('displayUserRole').innerText = userRole;
-            // Generate Avatar based on Name
-            document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${userName.replace(' ', '+')}&background=2563eb&color=fff`;
+            document.getElementById('userAvatar').src = avatarUrl;
+            
+            document.getElementById('drawerUserName').innerText = userName;
+            document.getElementById('drawerUserRole').innerText = userRole;
+            document.getElementById('drawerAvatarImg').src = avatarUrl;
 
-            // Start fetching data
+            const hour = new Date().getHours();
+            let greeting = "Good Evening!";
+            if (hour < 12) greeting = "Good Morning!";
+            else if (hour < 17) greeting = "Good Afternoon!";
+            const greetEl = document.getElementById('greetingText');
+            greetEl.innerText = greeting;
+            if(window.innerWidth > 768) greetEl.style.display = "block";
+
             fetchAppData();
         };
 
-        // 3. Logout Function
+        // ==========================================
+        // 2. SPA PAGE SWITCHING LOGIC
+        // ==========================================
+        function switchPage(pageId, element = null) {
+            document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active-page'));
+            const targetPage = document.getElementById(pageId);
+            if(targetPage) targetPage.classList.add('active-page');
+
+            document.querySelectorAll('.sidebar .nav-item').forEach(item => item.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            document.querySelectorAll('.bottom-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('data-target') === pageId) btn.classList.add('active');
+            });
+
+            if(pageId === 'downloadsPage') renderDownloads();
+            if(window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('active');
+        }
+
+        // ==========================================
+        // 3. UI TOGGLES
+        // ==========================================
+        document.getElementById('menu-btn').addEventListener('click', () => { 
+            document.getElementById('sidebar').classList.toggle('active'); 
+        });
+
+        function toggleRightMenu() {
+            document.getElementById('rightDrawer').classList.toggle('active');
+            document.getElementById('drawerOverlay').classList.toggle('active');
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => console.log(err));
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen(); 
+            }
+            toggleRightMenu();
+        }
+
+        const themeBtn = document.getElementById('theme-btn');
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            themeBtn.classList.toggle('fa-moon');
+            themeBtn.classList.toggle('fa-sun');
+        });
+
         function logout() {
             localStorage.removeItem("codenix_user_name");
             localStorage.removeItem("codenix_user_role");
             window.location.href = "login.html";
         }
 
-        // 4. Fetch Live Data From Google Sheets
+        // ==========================================
+        // 4. FETCH DATA (Google Sheets)
+        // ==========================================
         async function fetchAppData() {
             try {
-                // Fetching Videos
+                // Fetch Videos
                 const videoRes = await fetch(SCRIPT_URL + "?sheet=Videos");
                 const videos = await videoRes.json();
-                
-                const vidSection = document.getElementById('videosSection');
-                vidSection.innerHTML = `<div class="section-header"><h2 class="section-title">Recent Videos</h2><a href="#" class="view-all">View All</a></div>`;
+                const homeVidSec = document.getElementById('homeVideosSection');
+                const fullVidSec = document.getElementById('fullVideosList');
+                homeVidSec.innerHTML = ""; fullVidSec.innerHTML = "";
                 
                 if(videos.length > 0) {
-                    const latestVids = videos.slice(-3).reverse(); // Sirf last 3 video dikhayega
-                    latestVids.forEach(vid => {
-                        if(vid.VideoTitle) {
-                            vidSection.innerHTML += `
-                            <div class="video-item" onclick="window.open('${vid.YouTubeLink}', '_blank')" style="cursor:pointer;">
-                                <div class="vid-thumb" style="background: #27272a;"><i class="fas fa-play" style="color: #3b82f6;"></i></div>
-                                <div class="vid-info">
-                                    <h4>${vid.VideoTitle}</h4>
-                                    <p>${vid.Category || 'Video'}</p>
+                    const reversedVids = videos.reverse();
+                    reversedVids.forEach((vid, index) => {
+                        if(!vid.VideoTitle) return;
+                        let safeTitle = vid.VideoTitle.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+                        let htmlSnippet = `
+                        <div class="video-item" onclick="openVideoModal('${vid.YouTubeLink}', '${safeTitle}')">
+                            <div class="note-info">
+                                <div class="vid-thumb"><i class="fas fa-play" style="color: #3b82f6;"></i></div>
+                                <div class="info-text">
+                                    <h4>${vid.VideoTitle}</h4><p>${vid.Category || 'Video'}</p>
                                 </div>
-                                <i class="fas fa-chevron-right icon-btn" style="font-size:14px;"></i>
-                            </div>`;
-                        }
+                            </div>
+                            <i class="fas fa-download icon-btn" style="color:var(--primary-blue);" onclick="event.stopPropagation(); saveItem('${safeTitle}', 'Video', '${vid.YouTubeLink}')"></i>
+                        </div>`;
+                        fullVidSec.innerHTML += htmlSnippet;
+                        if(index < 4) homeVidSec.innerHTML += htmlSnippet;
                     });
-                } else {
-                    vidSection.innerHTML += `<p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:20px;">No recent videos found.</p>`;
                 }
 
-                // Fetching Notes
+                // Fetch Notes
                 const noteRes = await fetch(SCRIPT_URL + "?sheet=Notes");
                 const notes = await noteRes.json();
-
-                const noteSection = document.getElementById('notesSection');
-                noteSection.innerHTML = `<div class="section-header"><h2 class="section-title">Latest Notes</h2><a href="#" class="view-all">View All</a></div>`;
+                const homeNoteSec = document.getElementById('homeNotesSection');
+                const fullNoteSec = document.getElementById('fullNotesList');
+                homeNoteSec.innerHTML = ""; fullNoteSec.innerHTML = "";
 
                 if(notes.length > 0) {
-                    const latestNotes = notes.slice(-3).reverse(); // Sirf last 3 notes
-                    latestNotes.forEach(note => {
-                        if(note.NoteTitle) {
-                            noteSection.innerHTML += `
-                            <div class="note-item">
-                                <div class="note-info">
-                                    <i class="fas fa-file-pdf pdf-icon"></i>
-                                    <div><h4>${note.NoteTitle}</h4><p>PDF Document</p></div>
+                    const reversedNotes = notes.reverse(); 
+                    reversedNotes.forEach((note, index) => {
+                        if(!note.NoteTitle) return;
+                        let safeNoteTitle = note.NoteTitle.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+                        let htmlSnippet = `
+                        <div class="note-item">
+                            <div class="note-info">
+                                <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 24px; padding: 8px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;"></i>
+                                <div class="info-text">
+                                    <h4>${note.NoteTitle}</h4><p>PDF Document</p>
                                 </div>
-                                <a href="${note.PDFLink}" target="_blank" class="download-btn"><i class="fas fa-download"></i></a>
-                            </div>`;
-                        }
+                            </div>
+                            <div style="display: flex; gap: 15px; align-items: center;">
+                                <i class="fas fa-bookmark icon-btn" style="color:var(--success);" onclick="saveItem('${safeNoteTitle}', 'PDF', '${note.PDFLink}')"></i>
+                                <a href="${note.PDFLink}" target="_blank" style="color:var(--text-muted);"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>`;
+                        fullNoteSec.innerHTML += htmlSnippet;
+                        if(index < 4) homeNoteSec.innerHTML += htmlSnippet;
                     });
-                } else {
-                    noteSection.innerHTML += `<p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:20px;">No notes uploaded yet.</p>`;
                 }
 
-                // Fetching Banners
+                // Fetch Promotional Banners for Slider Carousel
                 const bannerRes = await fetch(SCRIPT_URL + "?sheet=Banners");
                 const banners = await bannerRes.json();
-                if(banners.length > 0 && banners[0].ImageURL) {
-                    // Agar banner upload hua hai toh purane hero section ko replace kar do
-                    const lastBanner = banners[banners.length - 1];
-                    document.getElementById('homeBanner').style.background = `url('${lastBanner.ImageURL}') center/cover`;
-                    // Agar text nahi dikhana hai toh content ko hide kar sakte hain
+                const sliderContainer = document.getElementById('promoSlider');
+                
+                if(banners.length > 0) {
+                    sliderContainer.innerHTML = ""; 
+                    banners.forEach((banner, index) => {
+                        if(banner.ImageURL) {
+                            const activeClass = index === 0 ? "active-slide" : "";
+                            sliderContainer.innerHTML += `
+                                <div class="promo-slide ${activeClass}" style="background-image: url('${banner.ImageURL}');"></div>
+                            `;
+                        }
+                    });
+                    startPromoSlider();
+                } else {
+                    sliderContainer.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px; font-size:12px;">No promotional banners uploaded yet.</p>`;
                 }
 
             } catch (error) {
                 console.error("Data Load Error: ", error);
-                document.getElementById('videosSection').innerHTML += `<p style="color:red; text-align:center;">Failed to load data.</p>`;
-                document.getElementById('notesSection').innerHTML += `<p style="color:red; text-align:center;">Failed to load data.</p>`;
+            }
+        }
+
+        // ==========================================
+        // 5. PROMO CAROUSEL SLIDER AUTO TIMING (3 SECONDS)
+        // ==========================================
+        let currentSlideIndex = 0;
+        function startPromoSlider() {
+            const slides = document.querySelectorAll('.promo-slide');
+            if(slides.length <= 1) return; 
+            
+            setInterval(() => {
+                slides[currentSlideIndex].classList.remove('active-slide');
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                slides[currentSlideIndex].classList.add('active-slide');
+            }, 3000); // 3000 milliseconds = 3 Seconds
+        }
+
+        // ==========================================
+        // 6. DOWNLOADS & OFFLINE SAVE LOGIC
+        // ==========================================
+        function saveItem(title, type, link) {
+            let savedItems = JSON.parse(localStorage.getItem("codenix_downloads")) || [];
+            if(savedItems.find(item => item.title === title)) {
+                alert("यह पहले से ही Downloads में सेव है!"); return;
+            }
+            savedItems.push({ title, type, link });
+            localStorage.setItem("codenix_downloads", JSON.stringify(savedItems));
+            alert("✅ " + title + " Downloads में सेव हुआ!");
+        }
+
+        function renderDownloads() {
+            const container = document.getElementById('savedItemsList');
+            let savedItems = JSON.parse(localStorage.getItem("codenix_downloads")) || [];
+            container.innerHTML = ""; 
+            if(savedItems.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:13px;">No offline downloads available.</p>`; return; }
+
+            savedItems.forEach((item, index) => {
+                let icon = item.type === 'PDF' ? 'fa-file-pdf' : 'fa-play-circle';
+                let color = item.type === 'PDF' ? '#ef4444' : '#3b82f6';
+                let action = item.type === 'PDF' 
+                    ? `<a href="${item.link}" target="_blank" class="btn btn-primary" style="padding: 5px 10px;">View</a>`
+                    : `<button onclick="openVideoModal('${item.link}', '${item.title}')" class="btn btn-primary" style="padding: 5px 10px;">Play</button>`;
+
+                container.innerHTML += `
+                <div class="note-item" style="background: var(--bg-glass);">
+                    <div class="note-info">
+                        <i class="fas ${icon}" style="font-size: 24px; color: ${color};"></i>
+                        <div class="info-text"><h4>${item.title}</h4><p>${item.type}</p></div>
+                    </div>
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        ${action}
+                        <i class="fas fa-trash" style="color:var(--danger); cursor:pointer;" onclick="deleteItem(${index})"></i>
+                    </div>
+                </div>`;
+            });
+        }
+        function deleteItem(index) {
+            let savedItems = JSON.parse(localStorage.getItem("codenix_downloads")) || [];
+            savedItems.splice(index, 1);
+            localStorage.setItem("codenix_downloads", JSON.stringify(savedItems));
+            renderDownloads(); 
+        }
+
+        // ==========================================
+        // 7. VIDEO MODAL PLAYER
+        // ==========================================
+        function getEmbedUrl(url) {
+            let videoId = "";
+            if (url.includes("youtu.be/")) videoId = url.split("youtu.be/")[1].split("?")[0];
+            else if (url.includes("watch?v=")) videoId = url.split("watch?v=")[1].split("&")[0];
+            else return url; 
+            return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1`;
+        }
+        function openVideoModal(link, title) {
+            const modal = document.getElementById('videoModal');
+            document.getElementById('modalVideoTitle').innerHTML = `<i class="fas fa-play-circle"></i> ${title}`;
+            document.getElementById('iframeContainer').innerHTML = `<iframe src="${getEmbedUrl(link)}" allowfullscreen></iframe>`;
+            modal.classList.add('active');
+        }
+        function closeVideoModal() {
+            document.getElementById('videoModal').classList.remove('active');
+            document.getElementById('iframeContainer').innerHTML = ""; 
+        }
+
+        // ==========================================
+        // 8. REAL-TIME FILTER SEARCH
+        // ==========================================
+        document.querySelector('.search-container input').addEventListener('keyup', function(e) {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('.active-page .course-card, .active-page .video-item, .active-page .note-item').forEach(el => {
+                const title = el.innerText.toLowerCase();
+                el.style.display = title.includes(term) ? '' : 'none';
+            });
+        });
+
+        // ==========================================
+        // 9. GEMINI AI INTEGRATION
+        // ==========================================
+        function openAIModal() { document.getElementById('aiModal').classList.add('active'); }
+        function closeAIModal() { document.getElementById('aiModal').classList.remove('active'); }
+
+        async function askGemini() {
+            const inputField = document.getElementById('aiInput');
+            const question = inputField.value.trim();
+            const chatBox = document.getElementById('aiChatBox');
+
+            if(!question) return;
+
+            chatBox.innerHTML += `
+                <div style="align-self: flex-end; background: var(--primary-blue); padding: 12px; border-radius: 10px; border-bottom-right-radius: 0; max-width: 85%; color: white; font-size: 13px;">
+                    ${question}
+                </div>`;
+            inputField.value = ""; 
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // ⚠️ अपनी जेनरेट की हुई असली Gemini API Key यहाँ डालें
+            const GEMINI_API_KEY = "YOUR_API_KEY_HERE"; 
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            
+            try {
+                chatBox.innerHTML += `<div id="aiLoading" style="background: var(--bg-glass); padding: 12px; border-radius: 10px; border-bottom-left-radius: 0; max-width: 85%; color: var(--text-muted); font-size: 13px;"><div class="loader" style="width:12px; height:12px;"></div> Thinking...</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: "You are an expert coding AI mentor for CodeNixHindi platform. Reply comprehensively in a friendly mix of Hindi and English. Question: " + question }] }]
+                    })
+                });
+
+                const data = await response.json();
+                document.getElementById('aiLoading').remove(); 
+
+                const aiReply = data.candidates[0].content.parts[0].text;
+
+                chatBox.innerHTML += `
+                    <div style="background: var(--bg-glass); padding: 12px; border-radius: 10px; border-bottom-left-radius: 0; max-width: 85%; color: var(--text-main); font-size: 13px; line-height: 1.5;">
+                        ${aiReply.replace(/\n/g, "<br>")} 
+                    </div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+            } catch (error) {
+                if(document.getElementById('aiLoading')) document.getElementById('aiLoading').remove();
+                chatBox.innerHTML += `<div style="color: var(--danger); font-size: 12px; text-align: center;">API Error: Please verify your Gemini API Key configuration.</div>`;
             }
         }
     </script>
