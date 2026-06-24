@@ -60,6 +60,8 @@
         .nav-item { padding: 12px 15px; display: flex; align-items: center; gap: 15px; color: var(--text-muted); border-radius: 10px; cursor: pointer; transition: all 0.3s ease; margin-bottom: 5px; font-size: 14px; font-weight: 500;}
         .nav-item:hover, .nav-item.active { background: var(--primary-blue); color: #fff; transform: translateX(5px); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); }
         .nav-item i { font-size: 18px; width: 20px; text-align: center; }
+        .live-pulse { animation: pulseRed 1.5s infinite; color: var(--danger); }
+        @keyframes pulseRed { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
         /* --- Main Content --- */
         .main-wrapper { margin-left: 260px; width: calc(100% - 260px); padding: 20px 40px 80px; min-height: 100vh; transition: 0.3s ease; }
@@ -109,7 +111,7 @@
 
         /* --- Dashboard Grid System --- */
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .section-title { font-size: 16px; font-weight: 600; }
+        .section-title { font-size: 16px; font-weight: 600; display:flex; align-items:center; gap:8px;}
         .view-all { color: var(--primary-blue); font-size: 12px; text-decoration: none; font-weight: 500; cursor: pointer; transition: 0.3s; }
         .view-all:hover { color: var(--accent-yellow); }
 
@@ -120,7 +122,7 @@
         .glass-card:hover { border-color: rgba(37,99,235,0.3); }
 
         /* --- Course Cards --- */
-        .course-card .thumbnail { height: 110px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 35px; font-weight: bold; margin-bottom: 15px; color: white; }
+        .course-card .thumbnail { height: 130px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 35px; font-weight: bold; margin-bottom: 15px; color: white; background-size: cover; background-position: center; position: relative; overflow: hidden; }
         .course-card h3 { font-size: 15px; margin-bottom: 5px; }
         .course-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-bottom: 15px; align-items: center;}
         .badge-free { background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 3px 8px; border-radius: 4px; font-weight: 600; font-size: 10px;}
@@ -133,34 +135,33 @@
         .note-item, .video-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.02); margin-bottom: 10px; transition: 0.3s; border: 1px solid transparent; cursor: pointer;}
         .note-item:hover, .video-item:hover { background: var(--card-hover); border-color: var(--border-glass); }
         .note-info { display: flex; align-items: center; gap: 15px; }
-        .vid-thumb { width: 60px; height: 40px; border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 16px; color: white; background: #1e293b; }
+        .vid-thumb { width: 60px; height: 40px; border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 16px; color: white; background: #1e293b; background-size: cover; background-position: center; }
         .info-text h4 { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
         .info-text p { font-size: 11px; color: var(--text-muted); }
 
-        /* --- NEW: Promotional Image Slider Board --- */
-        .promo-slider {
-            position: relative;
-            width: 100%;
-            height: 220px;
-            border-radius: 15px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.02);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-        .promo-slide {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            background-size: cover;
-            background-position: center;
-            border-radius: 15px;
-        }
-        .promo-slide.active-slide {
-            opacity: 1;
-        }
+        /* --- Promotional Image Slider Board --- */
+        .promo-slider { position: relative; width: 100%; height: 220px; border-radius: 15px; overflow: hidden; background: rgba(255, 255, 255, 0.02); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .promo-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; background-size: cover; background-position: center; border-radius: 15px; }
+        .promo-slide.active-slide { opacity: 1; }
 
+        /* --- LIVE CLASS SECTION UI --- */
+        .live-wrapper { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; height: 70vh; min-height: 500px; }
+        .live-player-box { background: #000; border-radius: 15px; border: 1px solid var(--border-glass); overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; }
+        .live-chat-box { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-header { padding: 15px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border-glass); font-weight: 600; font-size: 14px; display: flex; justify-content: space-between;}
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px; font-size: 12px; }
+        .chat-msg span { color: var(--accent-yellow); font-weight: 600; margin-right: 5px; }
+        .chat-input { padding: 15px; border-top: 1px solid var(--border-glass); display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
+        .chat-input input { flex: 1; background: var(--bg-body); border: 1px solid var(--border-glass); padding: 10px; border-radius: 20px; color: white; outline: none; font-size: 12px; }
+        .chat-input button { background: var(--primary-blue); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; }
+        
+        /* Scheduled Live Banner */
+        .scheduled-banner { text-align: center; color: white; padding: 20px; }
+        .scheduled-banner img { width: 80%; max-width: 400px; border-radius: 10px; margin-bottom: 20px; border: 2px solid var(--border-glass); }
+        .scheduled-banner h3 { font-size: 20px; margin-bottom: 10px; }
+        .scheduled-banner p { color: var(--accent-yellow); font-size: 16px; font-weight: bold; margin-bottom: 20px; }
+        
         /* --- Skeleton Loader --- */
         .skeleton { background: linear-gradient(90deg, var(--bg-glass) 25%, rgba(255,255,255,0.05) 50%, var(--bg-glass) 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 8px; height: 50px; margin-bottom: 10px; }
         @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
@@ -208,8 +209,8 @@
         .video-modal-content { width: 100%; max-width: 800px; background: var(--bg-body); border-radius: 15px; overflow: hidden; border: 1px solid var(--border-glass); position: relative; }
         .video-modal-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #0f172a; border-bottom: 1px solid var(--border-glass); }
         .close-modal { color: var(--danger); font-size: 24px; cursor: pointer; }
-        .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; }
-        .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
+        .iframe-container iframe, .iframe-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
         /* --- SPA Section Hiding --- */
@@ -218,7 +219,10 @@
 
         /* --- Responsive Magic --- */
         @media (max-width: 1024px) {
-            .grid-row-2 { grid-template-columns: 1fr; }
+            .grid-row-2, .live-wrapper { grid-template-columns: 1fr; }
+            .live-wrapper { height: auto; }
+            .live-player-box { height: 400px; }
+            .live-chat-box { height: 400px; }
         }
         @media (max-width: 768px) {
             .sidebar { left: -260px; }
@@ -237,7 +241,6 @@
 </head>
 <body>
 
-    <!-- Left Main Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="logo-area">
             <i class="fas fa-laptop-code"></i> CODENIX <span>HINDI</span>
@@ -245,6 +248,7 @@
         <div class="nav-menu" style="flex: 1; overflow-y: auto;">
             <div class="nav-item active" onclick="switchPage('homePage', this)"><i class="fas fa-home"></i> Home</div>
             <div class="nav-item" onclick="switchPage('coursesPage', this)"><i class="fas fa-book-open"></i> Courses</div>
+            <div class="nav-item" onclick="switchPage('livePage', this)"><i class="fas fa-broadcast-tower live-pulse"></i> Live Classes</div>
             <div class="nav-item" onclick="switchPage('videosPage', this)"><i class="fas fa-play-circle"></i> Videos</div>
             <div class="nav-item" onclick="switchPage('notesPage', this)"><i class="fas fa-file-pdf"></i> Notes</div>
             <div class="nav-item" onclick="switchPage('downloadsPage', this)"><i class="fas fa-download"></i> Downloads</div>
@@ -252,7 +256,6 @@
             <div class="nav-item" onclick="openAIModal()"><i class="fas fa-robot"></i> Doubt Solver <span class="badge" style="position:relative; right:0; top:0; background: #8b5cf6;">AI</span></div>
         </div>
         
-        <!-- Fixed Profile & Logout -->
         <div style="padding: 15px; border-top: 1px solid var(--border-glass);">
             <div class="nav-item" style="margin-bottom: 0;"><i class="fas fa-user-circle"></i> Profile</div>
             <div class="nav-item" onclick="logout()" style="color: var(--danger); margin-bottom: 0; margin-top: 5px;"><i class="fas fa-sign-out-alt"></i> Logout</div>
@@ -261,7 +264,6 @@
 
     <main class="main-wrapper">
         
-        <!-- Topbar -->
         <header class="topbar">
             <i class="fas fa-bars menu-toggle" id="menu-btn"></i>
             
@@ -288,19 +290,14 @@
             </div>
         </header>
 
-        <!-- ============================================== -->
-        <!-- SPA SECTIONS                                   -->
-        <!-- ============================================== -->
-
-        <!-- 1. HOME PAGE -->
         <div id="homePage" class="spa-page active-page">
             <section class="hero" id="homeBanner">
                 <div class="hero-content">
                     <h1>Welcome to <br>Codenix Hindi <br><span>Learning App</span></h1>
-                    <p>हिंदी में सीखें Computer और Programming बिल्कुल आसान तरीके से! Access high-quality videos, PDF notes, and interactive quizzes.</p>
+                    <p>हिंदी में सीखें Computer और Programming बिल्कुल आसान तरीके से! Access high-quality videos, PDF notes, live classes and interactive quizzes.</p>
                     <div class="hero-btns">
                         <button class="btn btn-primary" onclick="switchPage('coursesPage')"><i class="fas fa-compass"></i> Explore Courses</button>
-                        <button class="btn btn-outline"><i class="fas fa-stopwatch"></i> Take Quiz</button>
+                        <button class="btn btn-outline" onclick="switchPage('livePage')"><i class="fas fa-broadcast-tower"></i> Join Live</button>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -308,40 +305,20 @@
                 </div>
             </section>
 
-            <!-- Popular Courses Preview -->
             <div class="section-header">
-                <h2 class="section-title">Popular Courses</h2>
+                <h2 class="section-title"><i class="fas fa-fire" style="color: #ea580c;"></i> Popular Courses</h2>
                 <span class="view-all" onclick="switchPage('coursesPage')">View All</span>
             </div>
-            <div class="grid-row-1">
-                <div class="glass-card course-card">
-                    <div class="thumbnail" style="background: #ea580c;">&lt;/&gt;</div>
-                    <h3>HTML Full Course</h3>
-                    <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
-                    <div class="progress-container"><div class="progress-bar" style="width: 60%; background: #f97316;"></div></div>
-                    <div class="progress-text">60% Complete</div>
-                </div>
-                <div class="glass-card course-card">
-                    <div class="thumbnail" style="background: #2563eb;">CSS</div>
-                    <h3>CSS Full Course</h3>
-                    <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
-                    <div class="progress-container"><div class="progress-bar" style="width: 45%; background: #3b82f6;"></div></div>
-                    <div class="progress-text">45% Complete</div>
-                </div>
-                <div class="glass-card course-card">
-                    <div class="thumbnail" style="background: #ca8a04; color: #000;">JS</div>
-                    <h3>JavaScript Full Course</h3>
-                    <div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div>
-                    <div class="progress-container"><div class="progress-bar" style="width: 30%; background: #eab308;"></div></div>
-                    <div class="progress-text">30% Complete</div>
-                </div>
+            <div class="grid-row-1" id="homeCoursesRow">
+                <div class="skeleton" style="height: 200px;"></div>
+                <div class="skeleton" style="height: 200px;"></div>
+                <div class="skeleton" style="height: 200px;"></div>
             </div>
 
-            <!-- Notes & Videos Grid -->
             <div class="grid-row-2">
                 <div class="glass-card">
                     <div class="section-header">
-                        <h2 class="section-title">Latest Notes</h2>
+                        <h2 class="section-title"><i class="fas fa-file-pdf" style="color:var(--danger);"></i> Latest Notes</h2>
                         <span class="view-all" onclick="switchPage('notesPage')">View All</span>
                     </div>
                     <div class="item-list-container" id="homeNotesSection">
@@ -351,7 +328,7 @@
 
                 <div class="glass-card">
                     <div class="section-header">
-                        <h2 class="section-title">Recent Videos</h2>
+                        <h2 class="section-title"><i class="fas fa-video" style="color:var(--primary-blue);"></i> Recent Videos</h2>
                         <span class="view-all" onclick="switchPage('videosPage')">View All</span>
                     </div>
                     <div class="item-list-container" id="homeVideosSection">
@@ -360,7 +337,6 @@
                 </div>
             </div>
 
-            <!-- NEW: DYNAMIC PROMOTION BOARD (SLIDER CAROUSEL) -->
             <div class="glass-card" style="margin-bottom: 30px;" id="promoSection">
                 <div class="section-header">
                     <h2 class="section-title"><i class="fas fa-bullhorn" style="color: var(--accent-yellow);"></i> Special Announcements & Offers</h2>
@@ -373,19 +349,48 @@
             </div>
         </div>
 
-        <!-- 2. ALL COURSES PAGE -->
+        <div id="livePage" class="spa-page">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-broadcast-tower live-pulse"></i> Live Classes</h2>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Join live coding sessions and clear your doubts instantly.</p>
+            
+            <div class="live-wrapper">
+                <div class="live-player-box" id="livePlayerBox">
+                    <div class="scheduled-banner">
+                        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1000&auto=format&fit=crop" alt="Live Thumbnail">
+                        <h3 id="liveClassTitle">Next Class: Full Stack Web Development</h3>
+                        <p id="liveClassTime"><i class="far fa-clock"></i> Today @ 5:00 PM</p>
+                        <button class="btn btn-primary" style="margin: 0 auto;" onclick="alert('Notification set! We will remind you.')"><i class="fas fa-bell"></i> Notify Me</button>
+                    </div>
+                </div>
+
+                <div class="live-chat-box">
+                    <div class="chat-header">
+                        <span><i class="fas fa-comments"></i> Live Chat</span>
+                        <span style="color: var(--success); font-size: 12px; font-weight: 500;" id="chatAccessStatus">Public</span>
+                    </div>
+                    <div class="chat-messages" id="liveChatBox">
+                        <div class="chat-msg"><span>Admin:</span> Welcome to the live class! Drop your questions here.</div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="liveChatInput" placeholder="Say something...">
+                        <button onclick="sendLiveMessage()"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="coursesPage" class="spa-page">
             <div class="section-header">
                 <h2 class="section-title"><i class="fas fa-book-open" style="color:var(--primary-blue);"></i> All Courses</h2>
             </div>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Your courses structure fetched directly from database.</p>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Explore unlimited courses fetched dynamically from database.</p>
             <div class="grid-row-1" id="fullCoursesGrid">
-                <div class="glass-card course-card"><div class="thumbnail" style="background: #7c3aed;"><i class="fas fa-desktop"></i></div><h3>Computer Basics</h3><div class="course-meta"><span>हिंदी में</span> <span class="badge-free">Free</span></div></div>
-                <div class="glass-card course-card"><div class="thumbnail" style="background: #10b981;"><i class="fab fa-react"></i></div><h3>React JS (Coming Soon)</h3><div class="course-meta"><span>हिंदी में</span></div></div>
+                <div class="loader"></div>
             </div>
         </div>
 
-        <!-- 3. ALL VIDEOS PAGE -->
         <div id="videosPage" class="spa-page">
             <div class="section-header">
                 <h2 class="section-title"><i class="fas fa-play-circle" style="color:var(--primary-blue);"></i> All Videos</h2>
@@ -395,7 +400,6 @@
             </div>
         </div>
 
-        <!-- 4. ALL NOTES PAGE -->
         <div id="notesPage" class="spa-page">
             <div class="section-header">
                 <h2 class="section-title"><i class="fas fa-file-pdf" style="color:var(--danger);"></i> All PDF Notes</h2>
@@ -405,7 +409,6 @@
             </div>
         </div>
 
-        <!-- 5. DOWNLOADS PAGE -->
         <div id="downloadsPage" class="spa-page">
             <div class="section-header">
                 <h2 class="section-title"><i class="fas fa-download" style="color:var(--success);"></i> My Downloads</h2>
@@ -413,7 +416,6 @@
             <div id="savedItemsList" style="display: grid; gap: 10px;"></div>
         </div>
 
-        <!-- 6. CATEGORIES PAGE -->
         <div id="categoriesPage" class="spa-page">
             <div class="section-header">
                 <h2 class="section-title"><i class="fas fa-layer-group" style="color:var(--accent-yellow);"></i> Categories</h2>
@@ -427,7 +429,6 @@
 
     </main>
 
-    <!-- Right Drawer Menu -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleRightMenu()"></div>
     <div class="right-drawer" id="rightDrawer">
         <div class="drawer-header">
@@ -452,7 +453,6 @@
         </div>
     </div>
 
-    <!-- Mobile Bottom Navigation -->
     <div class="bottom-nav">
         <div class="bottom-btn active" data-target="homePage" onclick="switchPage('homePage')">
             <i class="fas fa-home"></i><span>Home</span>
@@ -460,15 +460,17 @@
         <div class="bottom-btn" data-target="coursesPage" onclick="switchPage('coursesPage')">
             <i class="fas fa-book-open"></i><span>Course</span>
         </div>
+        <div class="bottom-btn" data-target="livePage" onclick="switchPage('livePage')">
+            <i class="fas fa-broadcast-tower live-pulse"></i><span>Live</span>
+        </div>
         <div class="bottom-btn" data-target="downloadsPage" onclick="switchPage('downloadsPage')">
-            <i class="fas fa-download"></i><span>Downloads</span>
+            <i class="fas fa-download"></i><span>Offline</span>
         </div>
         <div class="bottom-btn" onclick="toggleRightMenu()">
             <i class="fas fa-bars"></i><span>Menu</span>
         </div>
     </div>
 
-    <!-- YouTube Video Modal -->
     <div class="video-modal-overlay" id="videoModal">
         <div class="video-modal-content">
             <div class="video-modal-header">
@@ -479,7 +481,6 @@
         </div>
     </div>
 
-    <!-- Gemini AI Doubt Solver Modal -->
     <div class="video-modal-overlay" id="aiModal">
         <div class="video-modal-content" style="max-width: 500px; height: 600px; display: flex; flex-direction: column;">
             <div class="video-modal-header" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
@@ -499,6 +500,7 @@
     </div>
 
     <script>
+        // Aapka Main Google Script URL jahan se saara data aayega
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydtK9KUc2ytUW42MPoMFvlU87zjVP0SF1C-8O-GWRKJvQ_dIP-aCE3ht4A8IrH56berQ/exec";
 
         // ==========================================
@@ -525,7 +527,8 @@
             greetEl.innerText = greeting;
             if(window.innerWidth > 768) greetEl.style.display = "block";
 
-            fetchAppData();
+            // Ye function ab Courses, Videos, Notes, Banners sab laayega
+            fetchAppData(); 
         };
 
         // ==========================================
@@ -549,7 +552,7 @@
         }
 
         // ==========================================
-        // 3. UI TOGGLES
+        // 3. UI TOGGLES & LOGOUT (To index.html)
         // ==========================================
         document.getElementById('menu-btn').addEventListener('click', () => { 
             document.getElementById('sidebar').classList.toggle('active'); 
@@ -576,18 +579,42 @@
             themeBtn.classList.toggle('fa-sun');
         });
 
+        // Logout ab index.html par bhejega
         function logout() {
             localStorage.removeItem("codenix_user_name");
             localStorage.removeItem("codenix_user_role");
-            window.location.href = "login.html";
+            window.location.href = "index.html"; 
         }
 
         // ==========================================
-        // 4. FETCH DATA (Google Sheets)
+        // 4. FETCH ALL DYNAMIC DATA (Google Sheets)
         // ==========================================
         async function fetchAppData() {
             try {
-                // Fetch Videos
+                // 4A. Fetch Courses (Dynamic Unlimited Logic)
+                const homeCourseSec = document.getElementById('homeCoursesRow');
+                const fullCourseSec = document.getElementById('fullCoursesGrid');
+                // Mocking API call for Courses (Admin panel ready)
+                const dummyCourses = [
+                    { title: "HTML Full Course", thumb: "https://images.unsplash.com/photo-1618477247222-ac60c628574e?w=500&auto=format", lang: "हिंदी में", tag: "Free", progress: 60 },
+                    { title: "CSS Mastery", thumb: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=500&auto=format", lang: "हिंदी में", tag: "Premium", progress: 20 },
+                    { title: "JS Logic Building", thumb: "https://images.unsplash.com/photo-1627398240411-b4f1a268a7eb?w=500&auto=format", lang: "हिंदी में", tag: "Free", progress: 0 }
+                ];
+                homeCourseSec.innerHTML = ""; fullCourseSec.innerHTML = "";
+                dummyCourses.forEach((c, idx) => {
+                    let cHTML = `
+                    <div class="glass-card course-card">
+                        <div class="thumbnail" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('${c.thumb}');"></div>
+                        <h3>${c.title}</h3>
+                        <div class="course-meta"><span>${c.lang}</span> <span class="badge-free" style="${c.tag==='Premium'?'color:#facc15; background:rgba(250,204,21,0.1)':''}">${c.tag}</span></div>
+                        <div class="progress-container"><div class="progress-bar" style="width: ${c.progress}%; background: var(--primary-blue);"></div></div>
+                        <div class="progress-text">${c.progress}% Complete</div>
+                    </div>`;
+                    fullCourseSec.innerHTML += cHTML;
+                    if(idx < 3) homeCourseSec.innerHTML += cHTML;
+                });
+
+                // 4B. Fetch Videos
                 const videoRes = await fetch(SCRIPT_URL + "?sheet=Videos");
                 const videos = await videoRes.json();
                 const homeVidSec = document.getElementById('homeVideosSection');
@@ -614,7 +641,7 @@
                     });
                 }
 
-                // Fetch Notes
+                // 4C. Fetch Notes
                 const noteRes = await fetch(SCRIPT_URL + "?sheet=Notes");
                 const notes = await noteRes.json();
                 const homeNoteSec = document.getElementById('homeNotesSection');
@@ -644,7 +671,7 @@
                     });
                 }
 
-                // Fetch Promotional Banners for Slider Carousel
+                // 4D. Fetch Promotional Banners
                 const bannerRes = await fetch(SCRIPT_URL + "?sheet=Banners");
                 const banners = await bannerRes.json();
                 const sliderContainer = document.getElementById('promoSlider');
@@ -670,7 +697,7 @@
         }
 
         // ==========================================
-        // 5. PROMO CAROUSEL SLIDER AUTO TIMING (3 SECONDS)
+        // 5. PROMO CAROUSEL SLIDER AUTO TIMING
         // ==========================================
         let currentSlideIndex = 0;
         function startPromoSlider() {
@@ -681,11 +708,28 @@
                 slides[currentSlideIndex].classList.remove('active-slide');
                 currentSlideIndex = (currentSlideIndex + 1) % slides.length;
                 slides[currentSlideIndex].classList.add('active-slide');
-            }, 3000); // 3000 milliseconds = 3 Seconds
+            }, 3000); 
         }
 
         // ==========================================
-        // 6. DOWNLOADS & OFFLINE SAVE LOGIC
+        // 6. LIVE CHAT SYSTEM (Frontend Logic)
+        // ==========================================
+        function sendLiveMessage() {
+            const input = document.getElementById('liveChatInput');
+            const msg = input.value.trim();
+            if(!msg) return;
+
+            const chatBox = document.getElementById('liveChatBox');
+            const userName = localStorage.getItem("codenix_user_name") || "Student";
+            
+            // Add Message to UI
+            chatBox.innerHTML += `<div class="chat-msg"><span>${userName.split(" ")[0]}:</span> ${msg}</div>`;
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // ==========================================
+        // 7. DOWNLOADS & OFFLINE SAVE LOGIC
         // ==========================================
         function saveItem(title, type, link) {
             let savedItems = JSON.parse(localStorage.getItem("codenix_downloads")) || [];
@@ -731,19 +775,30 @@
         }
 
         // ==========================================
-        // 7. VIDEO MODAL PLAYER
+        // 8. MULTI-FORMAT VIDEO PLAYER (MP4 + YouTube)
         // ==========================================
-        function getEmbedUrl(url) {
-            let videoId = "";
-            if (url.includes("youtu.be/")) videoId = url.split("youtu.be/")[1].split("?")[0];
-            else if (url.includes("watch?v=")) videoId = url.split("watch?v=")[1].split("&")[0];
-            else return url; 
-            return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1`;
+        function getEmbedElement(url) {
+            // Agar Admin ne direct .mp4 ya .webm upload kiya hai
+            if (url.endsWith(".mp4") || url.endsWith(".webm") || url.includes(".mp4?")) {
+                return `<video src="${url}" controls autoplay style="width:100%; height:100%; outline:none;"></video>`;
+            } 
+            // Agar YouTube Link hai
+            else if (url.includes("youtu.be/") || url.includes("watch?v=")) {
+                let videoId = "";
+                if (url.includes("youtu.be/")) videoId = url.split("youtu.be/")[1].split("?")[0];
+                else if (url.includes("watch?v=")) videoId = url.split("watch?v=")[1].split("&")[0];
+                return `<iframe src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1" allowfullscreen></iframe>`;
+            } 
+            // Generic Links (Google Drive etc.)
+            else {
+                return `<iframe src="${url}" allowfullscreen></iframe>`;
+            }
         }
+
         function openVideoModal(link, title) {
             const modal = document.getElementById('videoModal');
             document.getElementById('modalVideoTitle').innerHTML = `<i class="fas fa-play-circle"></i> ${title}`;
-            document.getElementById('iframeContainer').innerHTML = `<iframe src="${getEmbedUrl(link)}" allowfullscreen></iframe>`;
+            document.getElementById('iframeContainer').innerHTML = getEmbedElement(link);
             modal.classList.add('active');
         }
         function closeVideoModal() {
@@ -752,7 +807,7 @@
         }
 
         // ==========================================
-        // 8. REAL-TIME FILTER SEARCH
+        // 9. REAL-TIME FILTER SEARCH
         // ==========================================
         document.querySelector('.search-container input').addEventListener('keyup', function(e) {
             const term = e.target.value.toLowerCase();
@@ -763,7 +818,7 @@
         });
 
         // ==========================================
-        // 9. GEMINI AI INTEGRATION
+        // 10. GEMINI AI INTEGRATION
         // ==========================================
         function openAIModal() { document.getElementById('aiModal').classList.add('active'); }
         function closeAIModal() { document.getElementById('aiModal').classList.remove('active'); }
@@ -782,7 +837,6 @@
             inputField.value = ""; 
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // ⚠️ अपनी जेनरेट की हुई असली Gemini API Key यहाँ डालें
             const GEMINI_API_KEY = "YOUR_API_KEY_HERE"; 
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
             
@@ -817,4 +871,3 @@
     </script>
 </body>
 </html>
-
