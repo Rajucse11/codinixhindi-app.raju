@@ -332,8 +332,8 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Aapki Security Key (Admin Email) ekdam sahi set kar di hai yahan
-        const ADMIN_EMAIL = "Dhurendramahto89@gmail.com";
+        // MASTER FIX 1: Email poori tarah se chhote aksharon mein (Capital 'D' hata diya gaya hai)
+        const ADMIN_EMAIL = "dhurendramahto89@gmail.com";
 
         // --- UI FUNCTIONS (Attached to window for HTML access) ---
         window.switchTab = function(tab) {
@@ -393,8 +393,10 @@
         // --- CHECK LOGIN STATUS ON PAGE LOAD ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Yahan code check karega ki kya ye ADMIN_EMAIL hai
-                if (user.email === ADMIN_EMAIL) {
+                // MASTER FIX 2: Space hataya (.trim()) aur lower case mein convert kiya (.toLowerCase())
+                let currentEmail = user.email.trim().toLowerCase();
+                
+                if (currentEmail === ADMIN_EMAIL) {
                     window.location.href = "admin.html";
                 } else {
                     window.location.href = "codenixhindi.html";
@@ -416,16 +418,18 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 
+                // MASTER FIX 3: Database mein role save karte waqt bhi check theek kiya
+                let userRole = email.trim().toLowerCase() === ADMIN_EMAIL ? "Admin" : "Student";
+
                 // Save user to Firestore Database
                 await setDoc(doc(db, "Users", user.uid), {
                     name: name,
                     email: email,
-                    role: email === ADMIN_EMAIL ? "Admin" : "Student",
+                    role: userRole,
                     createdAt: new Date().toISOString()
                 });
 
                 window.showToast("Account Created! Redirecting...", "success");
-                // onAuthStateChanged will handle redirection
             } catch (error) {
                 window.showToast(error.message, "error");
                 window.setLoading('signupBtn', false);
@@ -444,7 +448,6 @@
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 window.showToast("Login Successful! Redirecting...", "success");
-                // onAuthStateChanged will handle redirection
             } catch (error) {
                 window.showToast("Invalid Email or Password.", "error");
                 window.setLoading('loginBtn', false);
@@ -464,16 +467,18 @@
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
 
+                // MASTER FIX 4: Social login mein bhi check theek kiya
+                let userRole = user.email.trim().toLowerCase() === ADMIN_EMAIL ? "Admin" : "Student";
+
                 // Save user to Firestore if they don't exist
                 await setDoc(doc(db, "Users", user.uid), {
                     name: user.displayName || "Social User",
                     email: user.email,
-                    role: user.email === ADMIN_EMAIL ? "Admin" : "Student",
+                    role: userRole,
                     createdAt: new Date().toISOString()
                 }, { merge: true });
 
                 window.showToast(`${providerName} Login Successful!`, "success");
-                // onAuthStateChanged will handle redirection
             } catch (error) {
                 window.showToast(`Error: ${error.message}`, "error");
             }
@@ -481,4 +486,3 @@
     </script>
 </body>
 </html>
-
