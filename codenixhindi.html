@@ -90,25 +90,6 @@
         .right-menu-btn { font-size: 22px; color: var(--text-main); cursor: pointer; padding: 5px; transition: 0.3s; }
         .right-menu-btn:hover { color: var(--primary-blue); }
 
-        /* --- Hero Section --- */
-        .hero {
-            background: linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(11,17,32,0.9) 100%), url('https://www.transparenttextures.com/patterns/cubes.png');
-            border: 1px solid var(--border-glass); border-radius: 20px; padding: 40px;
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;
-            position: relative; overflow: hidden; 
-        }
-        .hero-content { z-index: 1; max-width: 600px; }
-        .hero-content h1 { font-size: 32px; font-weight: 700; line-height: 1.3; margin-bottom: 15px; }
-        .hero-content h1 span { color: var(--accent-yellow); }
-        .hero-content p { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; line-height: 1.6; }
-        .hero-btns { display: flex; gap: 15px; }
-        .btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 13px; }
-        .btn-primary { background: var(--primary-blue); color: white; }
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
-        .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--border-glass); }
-        .btn-outline:hover { background: rgba(255,255,255,0.05); transform: translateY(-2px); }
-        .hero-image { z-index: 1; font-size: 100px; color: rgba(255,255,255,0.05); }
-
         /* --- Dashboard Grid System --- */
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .section-title { font-size: 16px; font-weight: 600; display:flex; align-items:center; gap:8px;}
@@ -118,17 +99,17 @@
         .grid-row-1 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .grid-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
 
-        .glass-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 15px; padding: 20px; transition: 0.3s; }
-        .glass-card:hover { border-color: rgba(37,99,235,0.3); }
+        .glass-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 15px; padding: 20px; transition: 0.3s; cursor: pointer;}
+        .glass-card:hover { border-color: rgba(37,99,235,0.3); transform: translateY(-5px); }
 
         /* --- Course Cards --- */
-        .course-card .thumbnail { height: 130px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 35px; font-weight: bold; margin-bottom: 15px; color: white; background-size: cover; background-position: center; position: relative; overflow: hidden; }
-        .course-card h3 { font-size: 15px; margin-bottom: 5px; }
+        .course-card .thumbnail { height: 130px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 35px; font-weight: bold; margin-bottom: 15px; color: white; background-size: cover; background-position: center; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .course-card h3 { font-size: 15px; margin-bottom: 10px; }
         .course-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-bottom: 15px; align-items: center;}
-        .badge-free { background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 3px 8px; border-radius: 4px; font-weight: 600; font-size: 10px;}
-        .progress-container { width: 100%; height: 4px; background: var(--bg-body); border-radius: 5px; overflow: hidden; margin-bottom: 8px; }
-        .progress-bar { height: 100%; border-radius: 5px; }
-        .progress-text { font-size: 10px; color: var(--text-muted); text-align: right; }
+        .badge-free { background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 10px;}
+        .progress-container { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin-bottom: 8px; }
+        .progress-bar { height: 100%; border-radius: 2px; }
+        .progress-text { font-size: 11px; color: var(--text-muted); text-align: left; }
 
         /* --- Notes & Videos Section --- */
         .item-list-container { max-height: 300px; overflow-y: auto; padding-right: 5px; }
@@ -235,13 +216,19 @@
             .main-wrapper { margin-left: 0; width: 100%; padding: 15px 15px 80px 15px; }
             .menu-toggle { display: block; }
             .search-container, .user-info { display: none; }
-            .hero { flex-direction: column; text-align: center; padding: 25px; }
-            .hero-btns { justify-content: center; }
-            .hero-image { display: none; }
             .bottom-nav { display: flex; } 
+            #homeBanner { flex-direction: column; text-align: center; }
+            #homeBanner .hero-btns { justify-content: center; }
+            #homeBanner .hero-image-box { margin-top: 20px; justify-content: center !important; }
         }
         .loader { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: var(--primary-blue); animation: spin 1s ease-in-out infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        .btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 13px; }
+        .btn-primary { background: var(--primary-blue); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--border-glass); }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); transform: translateY(-2px); }
     </style>
 </head>
 <body>
@@ -297,17 +284,24 @@
         </header>
 
         <div id="homePage" class="spa-page active-page">
-            <section class="hero" id="homeBanner">
-                <div class="hero-content">
-                    <h1>Welcome to <br>Codenix Hindi <br><span>Learning App</span></h1>
-                    <p>हिंदी में सीखें Computer और Programming बिल्कुल आसान तरीके से! Access high-quality videos, PDF notes, live classes and interactive quizzes.</p>
-                    <div class="hero-btns">
-                        <button class="btn btn-primary" onclick="switchPage('coursesPage')"><i class="fas fa-compass"></i> Explore Courses</button>
-                        <button class="btn btn-outline" onclick="switchPage('livePage')"><i class="fas fa-broadcast-tower"></i> Join Live</button>
+            
+            <section id="homeBanner" style="padding: 35px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #0b192c 0%, #112240 100%); border-radius: 16px; border: 1px solid var(--border-glass); margin-bottom: 30px;">
+                <div class="hero-content" style="max-width: 600px;">
+                    <h2 style="font-size: 18px; font-weight: normal; margin-bottom: 5px;">Welcome back, <span id="student-name" style="color: #3b82f6; font-weight: 700; text-transform: capitalize;">Student</span> 👋</h2>
+                    <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 15px; line-height: 1.2;">Codenix Hindi<br><span style="color: #facc15;">Learning App</span></h1>
+                    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 25px;">हिंदी में सीखें Computer और Programming<br>बिल्कुल आसान तरीके से!</p>
+                    <div class="hero-btns" style="display: flex; gap: 15px;">
+                        <button class="btn btn-primary" onclick="switchPage('coursesPage')">
+                            <i class="fas fa-compass"></i> Explore Courses
+                        </button>
+                        <button class="btn btn-outline" onclick="switchPage('notesPage')" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2);">
+                            <i class="fas fa-file-pdf"></i> PDF Notes
+                        </button>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <i class="fas fa-user-graduate"></i>
+                
+                <div class="hero-image-box" style="display: flex; justify-content: flex-end;">
+                    <img src="rk.jpg" alt="Admin" style="height: 220px; border-radius: 15px; box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); border: 2px solid rgba(255, 255, 255, 0.1); object-fit: cover;">
                 </div>
             </section>
 
@@ -315,7 +309,9 @@
                 <h2 class="section-title"><i class="fas fa-fire" style="color: #ea580c;"></i> Popular Courses</h2>
                 <span class="view-all" onclick="switchPage('coursesPage')">View All</span>
             </div>
+            
             <div class="grid-row-1" id="homeCoursesRow">
+                <div class="skeleton" style="height: 200px;"></div>
                 <div class="skeleton" style="height: 200px;"></div>
                 <div class="skeleton" style="height: 200px;"></div>
                 <div class="skeleton" style="height: 200px;"></div>
@@ -560,7 +556,8 @@
 
         window.logout = () => {
             signOut(auth).then(() => {
-                window.location.href = "login.html";
+                // Change: Ab index.html par redirect karega
+                window.location.href = "index.html";
             });
         };
 
@@ -574,13 +571,18 @@
                 document.getElementById('drawerUserName').innerText = globalUserName;
                 document.getElementById('userAvatar').src = avatarUrl;
                 document.getElementById('drawerAvatarImg').src = avatarUrl;
+                
+                // Change: Banner me user ka naam set karna
+                if(document.getElementById('student-name')) {
+                    document.getElementById('student-name').innerText = globalUserName;
+                }
 
                 // Load Firestore Data once Auth is successful
                 fetchFirebaseData();
                 listenForRealtimeAlerts();
             } else {
-                // Not logged in -> Kick out
-                window.location.href = "login.html";
+                // Not logged in -> Kick out (Redirect to index.html)
+                window.location.href = "index.html";
             }
         });
 
@@ -595,7 +597,7 @@
         // --- FETCH DATA FROM FIRESTORE ---
         async function fetchFirebaseData() {
             try {
-                // 1. Fetch Courses
+                // 1. Fetch Courses with their dynamic images
                 const courseSnap = await getDocs(collection(db, "Courses"));
                 const homeCourseSec = document.getElementById('homeCoursesRow');
                 const fullCourseSec = document.getElementById('fullCoursesGrid');
@@ -603,20 +605,31 @@
                 let cCount = 0;
                 courseSnap.forEach(doc => {
                     let c = doc.data();
-                    let thumb = "https://images.unsplash.com/photo-1627398240411-b4f1a268a7eb?w=500&auto=format"; // Default Image
+                    // Database se image uthayega, agar nahi mili to default image lagayega
+                    let thumb = c.imageUrl || c.thumbnailUrl || c.imageLink || "https://images.unsplash.com/photo-1627398240411-b4f1a268a7eb?w=500&auto=format"; 
+                    
                     let cHTML = `
-                    <div class="glass-card course-card">
-                        <div class="thumbnail" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('${thumb}');"></div>
-                        <h3>${c.name}</h3>
-                        <div class="course-meta"><span>हिंदी में</span> <span class="badge-free" style="color:var(--success); background:rgba(16, 185, 129, 0.15)">Free</span></div>
-                        <div class="progress-container"><div class="progress-bar" style="width: 0%; background: var(--primary-blue);"></div></div>
-                        <div class="progress-text">0% Complete</div>
+                    <div class="glass-card course-card" onclick="switchPage('videosPage')">
+                        <div class="thumbnail" style="background-image: url('${thumb}');"></div>
+                        <h3>${c.title || c.name || 'Coding Course'}</h3>
+                        <div class="course-meta">
+                            <span>हिंदी में</span> 
+                            <span class="badge-free">Free</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 0%; background: var(--primary-blue);"></div>
+                        </div>
+                        <div class="progress-text">Start Learning</div>
                     </div>`;
+                    
                     fullCourseSec.innerHTML += cHTML;
-                    if(cCount < 3) homeCourseSec.innerHTML += cHTML;
+                    if(cCount < 4) homeCourseSec.innerHTML += cHTML;
                     cCount++;
                 });
-                if(cCount === 0) fullCourseSec.innerHTML = "<p>No courses uploaded yet.</p>";
+                if(cCount === 0) {
+                    fullCourseSec.innerHTML = "<p>No courses uploaded yet.</p>";
+                    homeCourseSec.innerHTML = "<p>No courses uploaded yet.</p>";
+                }
 
                 // 2. Fetch Videos
                 const vidSnap = await getDocs(collection(db, "Videos"));
@@ -701,8 +714,6 @@
             const unsub = onSnapshot(collection(db, "Notifications"), (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
-                        // Skip initial load spam by checking if it's recent, or just show it 
-                        // For a real app, you'd filter by timestamp. We'll just show the latest.
                         let data = change.doc.data();
                         window.showToast(`<b>${data.title}</b><br>${data.msg}`);
                         notifCount++;
